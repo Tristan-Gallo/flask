@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* {
+  box-sizing: border-box;
+}
+img{
+    height: 400px;
+    width: 400px;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+</style>
+</head>
+<body>
+
+<div class="row">
+  <div class="column">
+    <a href="/path/to/target.html">
+        <img src="static/ciao.jpg" alt="meteo" title="meteo">
+    </a>
+  </div>
+  <div class="column">
+    <a href="/path/to/target.html">
+        <img src="static/libro.jpg" alt="libro" title="libro">
+    </a>
+  </div>
+  <div class="column">
+    <a href="/path/to/target.html">
+        <img src="static/calendario.jpg" alt="calendario" title="calendario">
+    </a>
+  </div>
+</div>
+    
+</body>
+</html>
