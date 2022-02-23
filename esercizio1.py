@@ -2,7 +2,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
-def immagini():
+def meteo():
     return render_template('index2.html')
 
 if __name__ == '__main__':
