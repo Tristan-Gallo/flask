@@ -27,5 +27,17 @@ def dati():
     df1.to_csv('/workspace/flask/templates/dati.csv', index=False)
     return df1.to_html()
 
+@app.route("/ricerca", methods=["GET"])
+def ricerca():
+    return render_template("ricerca.html")
+
+@app.route("/dataRicerca", methods=["GET"])
+def datiRic():
+    scelta = request.args["Scelta"]
+    cerca = request.args["Ricerca"]
+    df = pd.read_csv("/workspace/flask/templates/dati.csv")
+    df_result = df[df[scelta] == cerca]
+    return df_result.to_html()
+
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=3246, debug=True)

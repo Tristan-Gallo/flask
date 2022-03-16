@@ -1,18 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="/dati" method = "GET">
-    <p>Squadra <input type = "text" name = "Squadra" /></p>
-    <p>Anno <input type = "text" name = "Anno" /></p>
-    <p>Citta <input type = "text" name = "Citta" /></p>
+<form action="/data" method = "GET">
+    <p>Nome squadra <input type = "text" name = "Nome" required/></p>
+    <p>Anno di fondazione <input type = "text" name = "Anno" required/></p>
+    <p>Città <input type = "text" name = "Citta" required/></p>
 
-    <p><input type = "submit" value = "Submit" /></p> 
-    </form>
-</body>
-</html>
+    <p><input type = "submit" value = "Submit" /></p>
+</form>
