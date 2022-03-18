@@ -26,7 +26,6 @@ def dati():
     df1 = df1.append(nuovi_dati,ignore_index=True)
     # salviamo il dataframe sul file dati.csv
     df1.to_csv('/workspace/flask/templates/dati.csv', index=False)
-    pdb.set_trace()
     return render_template('risultatoes5.html',tables=[df1.to_html()], titles=[''])
 
 @app.route("/ricerca", methods=["GET"])
