@@ -34,11 +34,22 @@ def ricerca():
 
 @app.route("/dataRicerca", methods=["GET"])
 def datiRic():
-    scelta = request.args["Scelta"]
+    SceltaSquadra = request.args["SceltaSquadra"]
+    SceltaAnno = request.args["SceltaAnno"]
+    SceltaCitta = request.args["SceltaCitta"]
+    print(SceltaAnno,SceltaCitta,SceltaSquadra)
+    if SceltaSquadra:
+        proprieta  = 'squadra'
+    elif SceltaAnno:
+        proprieta = 'anno'
+    elif SceltaCitta:
+        proprieta = 'citta'
+    else:
+        proprieta = 'squadra'
     cerca = request.args["Ricerca"]
-    df = pd.read_csv("/workspace/flask/templates/dati.csv")
-    df_result = df[df[scelta] == cerca]
-    return df_result.to_html()
+    df = pd.read_csv("/workspace/flask/templates/dati.csv", header=0)
+    df_result = df.loc[proprieta] == cerca
+    return render_template('risultatorices5.html',tables=[df_result.to_html()], titles=[''])
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=3246, debug=True)
