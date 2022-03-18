@@ -1,6 +1,7 @@
 from flask import Flask, render_template,request
 app = Flask(__name__)
 import pandas as pd
+import pdb 
 
 @app.route('/', methods=['GET'])
 def home():
@@ -14,7 +15,7 @@ def inserisci():
 def dati():
     # inserimento dei dati nel file csv
     # lettura dei dati dal form html 
-    squadra = request.args['Squadra']
+    squadra = request.args['Nome']
     anno = request.args['Anno']
     citta = request.args['Citta']
     # lettura dei dati daal file nel dataframe
@@ -25,7 +26,8 @@ def dati():
     df1 = df1.append(nuovi_dati,ignore_index=True)
     # salviamo il dataframe sul file dati.csv
     df1.to_csv('/workspace/flask/templates/dati.csv', index=False)
-    return df1.to_html()
+    pdb.set_trace()
+    return render_template('risultatoes5.html',tables=[df1.to_html()], titles=[''])
 
 @app.route("/ricerca", methods=["GET"])
 def ricerca():
