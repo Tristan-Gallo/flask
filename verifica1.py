@@ -14,8 +14,6 @@
 from flask import Flask, render_template, request, Response
 app = Flask(__name__)
 
-stazioni= pd.read_csv('/workspace/flask/coordfix_ripetitori_radiofonici_milano_160120_loc_final.csv',sep=";")
-
 import io
 import pandas as pd
 import geopandas as gpd
@@ -26,6 +24,10 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
+
+stazioni = pd.read_csv('/workspace/flask/coordfix_ripetitori_radiofonici_milano_160120_loc_final.csv',sep=";")
+
+
 @app.route("/", methods=["GET"])
 def home():
     #numero stazioni per ogni municipio
@@ -33,10 +35,30 @@ def home():
 
 @app.route("/numero", methods=["GET"])
 def numero():
-    risultato = stazione.groupby("MUNICIPIO")["OPERATORE"].count().reset_index()
+    global risultato
+    risultato = stazioni.groupby("MUNICIPIO")["OPERATORE"].count().reset_index()
     return render_template("elenco.html",risultato=risultato.to_html)
 
 
+@app.route("/grafico", methods=["GET"])
+def grafico():
+
+    #visualizza grafico
+    fig, ax = plt.subplots(figsize = (6,4))
+
+    x = risultato.MUNICIPIO
+    y = risultato.OPERATORE
+
+    ax.bar(x, y, color = "#304C89")
+    
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
+
+    return render_template("home.html")
+
+@app.route("/selezione", methods=["GET"])
+def grafico():
 
 
 
