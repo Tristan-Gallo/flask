@@ -36,11 +36,19 @@ def home():
 
 @app.route("/numero", methods=["GET"])
 def numero():
+    numero1 = request.args["numero1"]
+    numero2 = request.args["numero2"]
     global risultato
     risultato = stazioni.groupby("MUNICIPIO").count()
     risultato.sort_values(['OPERATORE'], ascending=True,inplace=True)
-    risultato.reset_index()
-    return render_template("elenco.html",risultato=risultato.to_html)
+    #risultato.reset_index()
+    risultato = risultato["OPERATORE"]
+    if numero1 == 'table':
+
+
+        return render_template("elenco.html",tables=[stazioni.to_html()], titles=[''])
+    else:
+        return render_template("elenco.html",tables=[stazioni.to_html()], titles=[''])
 
 
 
@@ -57,6 +65,5 @@ def numero():
 
 
 
-
-    if __name__ == '__main__':
+if __name__ == '__main__':
         app.run(host='0.0.0.0', port=3246, debug=True)
