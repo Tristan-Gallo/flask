@@ -1,5 +1,6 @@
 #Si vuole realizzare un server web che permetta di avere informazioni sulle stazioni radio a Milano. In particolare l’utente deve poter:
 #Avere il numero di stazioni per ogni municipio (in ordine crescente sul numero del municipio) e il grafico corrispondente
+
 #Avere un elenco di tutte le stazioni radio che si trovano in un certo quartiere. L’utente inserisce il nome del quartiere (anche solo una parte del nome) 
 #e il sito risponde con l’elenco ordinato in ordine alfabetico delle stazioni radio presenti in quel quartiere
 #Avere la posizione in città di una stazione radio. L’utente sceglie il nome della stazione da un menù a tendina (i nomi delle stazioni devono essere ordinati in ordine 
@@ -36,29 +37,12 @@ def home():
 @app.route("/numero", methods=["GET"])
 def numero():
     global risultato
-    risultato = stazioni.groupby("MUNICIPIO")["OPERATORE"].count().reset_index()
+    risultato = stazioni.groupby("MUNICIPIO").count()
+    risultato.sort_values(['OPERATORE'], ascending=True,inplace=True)
+    risultato.reset_index()
     return render_template("elenco.html",risultato=risultato.to_html)
 
 
-@app.route("/grafico", methods=["GET"])
-def grafico():
-
-    #visualizza grafico
-    fig, ax = plt.subplots(figsize = (6,4))
-
-    x = risultato.MUNICIPIO
-    y = risultato.OPERATORE
-
-    ax.bar(x, y, color = "#304C89")
-    
-    output = io.BytesIO()
-    FigureCanvas(fig).print_png(output)
-    return Response(output.getvalue(), mimetype='image/png')
-
-    return render_template("home.html")
-
-@app.route("/selezione", methods=["GET"])
-def grafico():
 
 
 
@@ -73,5 +57,6 @@ def grafico():
 
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3246, debug=True)
+
+    if __name__ == '__main__':
+        app.run(host='0.0.0.0', port=3246, debug=True)
